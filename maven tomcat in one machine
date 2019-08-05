@@ -1,0 +1,102 @@
+sudo su - 
+yum install update -y
+yum install wget zip unzip vim -y                                                                                               
+yum install git -y
+ps -ef | grep git
+yum install java-1.8.0-openjdk-devel -y
+
+
+#INSTALL ALL PACKAGES INTO /OPT DIRECTORY
+cd /opt
+wget http://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.22/bin/apache-tomcat-9.0.22.zip
+yum install unzip -y
+ls
+unzip apache-tomcat-9.0.22.zip
+ll
+cd apache-tomcat-9.0.22/
+ll
+cd bin
+ll
+sh catalina.sh start
+#Check now ip:8080 in google window
+#it will shows the tomcat web page
+#try to login manager console
+##it will throw the error404
+
+
+
+FOLLOW THE BELLOW STEPS
+cd ..
+ll
+cd webapps
+ll
+cd manager
+ll
+cd META-INF/
+ll
+vi context.xml
+<!-- <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+:wq!
+cd ..
+ll
+cd bin/
+ll
+sh catalina.sh stop
+sh catalina.sh start
+#Now try to login from it will ask the user name passwd
+
+cd ..
+ll
+cd conf/
+ll
+cd tomcat-users.xml
+vi tomcat-users.xml
+<user username="admin" password="admin" roles="admin-gui,manager-gui"/>
+#FOR JENKINS USAGE
+#<user username="admin" password="admin" roles="admin-gui,manager-gui,manager-script"/>
+cd ..
+ll
+cd bin
+sh catalina.sh stop
+sh catalina.sh start
+#NOW TRY IT ONCE TO LOGING
+
+cd ..
+git clone https://github.com/pattisriramulup1/spring-petclinic.git
+ll
+cd spring-petclinic
+ll
+cd ..
+ cd /opt
+ wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.zip
+ unzip apache-maven-3.6.0-bin.zip
+ echo "export M2_HOME=/opt/apache-maven-3.6.0" >> ~/.bash_profile
+ echo 'export PATH=$PATH:$M2_HOME/bin' >> ~/.bash_profile
+ source ~/.bash_profile
+ mvn -version
+ ping www.google.com
+ cd /opt
+ ll
+ cd apache-maven-3.6.0
+ ll
+ cd ..
+  ll
+ cd spring-petclinic
+ ll
+ mvn clean package
+ ll
+ cd target/
+ ll
+ cp petclinic.war /opt/apache-tomcat-9.0.22/webapps
+#cp <petclinic.war> /opt/apache-tomcat-9.0.22/webapps
+ cd /opt/apache-tomcat-9.0.22
+ ll
+ cd webapps/
+ ll
+ cd ..
+ ll
+ cd bin
+ ll
+ sh catalina.sh stop
+ sh catalina.sh start
